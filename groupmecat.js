@@ -36,8 +36,12 @@ function handle_command(cmd, send_callback) {
 function send_to_chat(message) {
 
   var now = (new Date).getTime();
+  var diff = now - last_posted;
+  console.log("Time since last posted: "+diff);
 
-  if ((now - last_posted) < process.env.POST_THROTTLE) {
+  if (diff < process.env.POST_THROTTLE) {
+    console.log("Not sending message due to throttling");
+    last_posted = now
     return
   }
 
