@@ -9,7 +9,7 @@ app.post('/bot_callback', function(request, response) {
   console.log("request:" + request.body.text);
   var command = request.body.text.match(/\?([a-z]+)/gi);
   if (command) {
-   handle_command(command[0]);
+   handle_command(command[0], send_to_chat);
   }
 });
 
@@ -19,11 +19,11 @@ app.listen(port, function() {
 });
 
 
-function handle_command(cmd) {
+function handle_command(cmd, send_callback) {
 
   switch (cmd) {
     case "?ping":
-      send_to_chat("pong");
+      send_callback("pong");
       break;
     default:
       console.log("Nothing to do for: " + cmd);
