@@ -32,7 +32,7 @@ function handle_command(cmd) {
 function send_to_chat(message) {
 
   var post_data = JSON.stringify({
-    bot_id: process.env.GROUPME_BOT_ID
+    bot_id: process.env.GROUPME_BOT_ID,
     text: message
   });
   var options = {
