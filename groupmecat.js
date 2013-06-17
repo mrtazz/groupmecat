@@ -6,7 +6,7 @@ app.use(express.logger());
 app.use(express.bodyParser());
 
 app.post('/bot_callback', function(request, response) {
-  console.log("request:" + request);
+  console.log("request:" + request.body);
   var text = (JSON.parse(request.body)).text;
   var command = text.match(/\?([a-z]+)/gi);
   if (command) {
