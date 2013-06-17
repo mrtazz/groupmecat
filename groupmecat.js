@@ -1,5 +1,5 @@
 var express = require("express");
-var http = require("http");
+var http = require("https");
 
 var app = express();
 app.use(express.logger());
@@ -26,6 +26,7 @@ function handle_command(cmd) {
       send_to_chat("pong");
       break;
     default:
+      console.log("Nothing to do for: " + cmd);
       break;
   }
 }
