@@ -6,11 +6,11 @@ app.use(express.logger());
 app.use(express.bodyParser());
 
 app.post('/bot_callback', function(request, response) {
-  console.log("request:" + request.body.text);
   var command = request.body.text.match(/\?([a-z]+)/gi);
   if (command) {
    handle_command(command[0], send_to_chat);
   }
+  response.send('handled');
 });
 
 var port = process.env.PORT || 5000;
