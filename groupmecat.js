@@ -5,6 +5,8 @@ var app = express();
 app.use(express.logger());
 app.use(express.bodyParser());
 
+var last_posted = (new Date).getTime();
+
 app.post('/bot_callback', function(request, response) {
   var command = request.body.text.match(/\?([a-z]+)/gi);
   if (command) {
@@ -32,6 +34,12 @@ function handle_command(cmd, send_callback) {
 }
 
 function send_to_chat(message) {
+
+  var now = (new Date).getTime();
+
+  if ((now - last_posted) < process.env.POST_THROTTLE) {
+    return
+  }
 
   var post_data = JSON.stringify({
     bot_id: process.env.GROUPME_BOT_ID,
