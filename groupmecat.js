@@ -22,7 +22,7 @@ app.listen(port, function() {
 function handle_command(cmd) {
 
   switch (cmd) {
-    case "ping":
+    case "?ping":
       send_to_chat("pong");
       break;
     default:
