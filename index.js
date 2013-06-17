@@ -3,6 +3,7 @@ var http = require("http");
 
 var app = express();
 app.use(express.logger());
+app.use(express.bodyParser());
 
 app.post('/bot_callback', function(request, response) {
   console.log("request:" + request);
