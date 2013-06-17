@@ -39,36 +39,36 @@ function send_to_chat(message) {
   var diff = now - last_posted;
   console.log("Time since last posted: "+diff);
 
-  if (diff < process.env.POST_THROTTLE) {
-    console.log("Not sending message due to throttling");
-    last_posted = now
-    return
+  if (diff > process.env.POST_THROTTLE) {
+
+    var post_data = JSON.stringify({
+      bot_id: process.env.GROUPME_BOT_ID,
+      text: message
+    });
+    var options = {
+      hostname: 'api.groupme.com',
+      port: 443,
+      path: '/v3/bots/post',
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Length': post_data.length
+      }
+    };
+    // Set up the request
+    var post_req = http.request(options, function(res) {
+        res.setEncoding('utf8');
+        res.on('data', function (chunk) {
+            console.log('Response: ' + chunk);
+        });
+    });
+
+    // post the data
+    post_req.write(post_data);
+    post_req.end();
+  } else {
+    console.log("Message not sent due to throttling.");
   }
-
-  var post_data = JSON.stringify({
-    bot_id: process.env.GROUPME_BOT_ID,
-    text: message
-  });
-  var options = {
-    hostname: 'api.groupme.com',
-    port: 443,
-    path: '/v3/bots/post',
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Content-Length': post_data.length
-    }
-  };
-  // Set up the request
-  var post_req = http.request(options, function(res) {
-      res.setEncoding('utf8');
-      res.on('data', function (chunk) {
-          console.log('Response: ' + chunk);
-      });
-  });
-
-  // post the data
-  post_req.write(post_data);
-  post_req.end();
+  last_posted = now
 }
 
