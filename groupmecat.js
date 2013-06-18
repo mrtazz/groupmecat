@@ -10,7 +10,7 @@ var last_posted = (new Date).getTime();
 app.post('/bot_callback', function(request, response) {
   var command = request.body.text.match(/^\?([a-z]+)/gi);
   if (command) {
-   handle_command(command[0], request.body.text.split(" "), send_to_chat);
+   handle_command(command[0], request.body.text.split(" "));
   }
   response.send('handled');
 });
@@ -21,11 +21,14 @@ app.listen(port, function() {
 });
 
 
-function handle_command(cmd, args, send_callback) {
+function handle_command(cmd, args) {
 
   switch (cmd) {
     case "?ping":
-      send_callback("pong");
+      send_to_chat("pong");
+      break;
+    case "?summon":
+      summon(args);
       break;
     default:
       console.log("Nothing to do for: " + cmd);
@@ -72,3 +75,16 @@ function send_to_chat(message) {
   last_posted = now
 }
 
+
+function summon(text) {
+  http.get("http://images.google.com/images?q=" + encodeURIComponent(text) + "&safe=strict", function(res) {
+    var data = "";
+    res.on("data", function(chunk){ data += chunk; });
+    res.on("end", function(){
+      var img = data.match(/imgurl=(.*?)&/gi)[0].match(/imgurl=(.*?)&/);
+      if (img[1]) {
+        send_to_chat("SUMMONED: " + img[1]);
+      }
+    });
+  });
+}
