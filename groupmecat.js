@@ -1,5 +1,6 @@
 var express = require("express");
-var http = require("https");
+var https = require("https");
+var http = require("http");
 
 var app = express();
 app.use(express.logger());
@@ -59,7 +60,7 @@ function send_to_chat(message) {
       }
     };
     // Set up the request
-    var post_req = http.request(options, function(res) {
+    var post_req = https.request(options, function(res) {
         res.setEncoding('utf8');
         res.on('data', function (chunk) {
             console.log('Response: ' + chunk);
