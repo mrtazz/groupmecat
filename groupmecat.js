@@ -10,7 +10,7 @@ var last_posted = (new Date).getTime();
 app.post('/bot_callback', function(request, response) {
   var command = request.body.text.match(/^\?([a-z]+)/gi);
   if (command) {
-   handle_command(command[0], send_to_chat);
+   handle_command(command[0], request.body.text.split(" "), send_to_chat);
   }
   response.send('handled');
 });
@@ -21,7 +21,7 @@ app.listen(port, function() {
 });
 
 
-function handle_command(cmd, send_callback) {
+function handle_command(cmd, args, send_callback) {
 
   switch (cmd) {
     case "?ping":
