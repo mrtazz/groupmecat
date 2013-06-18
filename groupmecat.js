@@ -84,7 +84,7 @@ function summon(text) {
     res.on("end", function(){
       var img = data.match(/imgurl=(.*?)&/gi)[0].match(/imgurl=(.*?)&/);
       if (img[1]) {
-        send_to_chat("SUMMONED: " + img[1]);
+        send_to_chat(img[1]);
       }
     });
   });
