@@ -8,7 +8,7 @@ app.use(express.bodyParser());
 var last_posted = (new Date).getTime();
 
 app.post('/bot_callback', function(request, response) {
-  var command = request.body.text.match(/\?([a-z]+)/gi);
+  var command = request.body.text.match(/^\?([a-z]+)/gi);
   if (command) {
    handle_command(command[0], send_to_chat);
   }
