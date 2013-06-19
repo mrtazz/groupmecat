@@ -34,7 +34,7 @@ function handle_command(cmd, args) {
       summon(args);
       break;
     case "?hug":
-      hug(args):
+      hug(args);
       break;
     case "?ahmed":
       ahmed();
