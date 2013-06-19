@@ -602,7 +602,8 @@ function ahmed () {
   send_to_chat(images[Math.floor(Math.random()*images.length)]);
 }
 
-function hug(user) {
+function hug(args) {
+  user = args[1];
   console.log("Hugging " + user);
 
   if (hugs[user] === undefined) {
