@@ -22,8 +22,6 @@ app.listen(port, function() {
   console.log("Listening on " + port);
 });
 
-var hugs = {}
-
 
 function handle_command(cmd, args) {
 
@@ -37,9 +35,6 @@ function handle_command(cmd, args) {
       break;
     case "?ahmed":
       ahmed();
-      break;
-    case "?hug":
-      hug(args);
       break;
     default:
       console.log("Nothing to do for: " + cmd);
@@ -593,14 +588,4 @@ function ahmed () {
 
 
   send_to_chat(images[Math.floor(Math.random()*images.length)]);
-}
-
-function hug(user) {
-  if (hugs[user] === undefined) {
-    hugs[user] = 0;
-  }
-
-  hugs[user]++;
-
-  send_to_chat(user + " now has " + hugs[user] + " hugs.");
 }
