@@ -8,6 +8,8 @@ app.use(express.bodyParser());
 
 var last_posted = (new Date).getTime();
 
+var hugs = {};
+
 app.post('/bot_callback', function(request, response) {
   console.log("Received: " + request.body.text);
   var command = request.body.text.match(/^\?([a-z]+)/gi);
@@ -608,8 +610,8 @@ function hug(text) {
     hostname: 'confhu.gs',
     port: 80,
     path: '/recv.php',
-    method: 'GET',
-  }
+    method: 'GET'
+  };
 
   var request = http.request(options, function(response) {
     // cool!    
