@@ -597,11 +597,26 @@ function ahmed () {
 
 function hug(text) {
   user = text.split(" ")[1];
+  console.log("Hugging " + user);
+
   if (hugs[user] === undefined) {
     hugs[user] = 0;
+    console.log("Creating hugspace for  " + user);
   }
 
   hugs[user]++;
 
-  send_to_chat(user + " now has " + hugs[user] + " hugs.");
+  options = {
+    hostname: 'confhu.gs',
+    port: 80,
+    path: '/recv.php',
+    method: 'GET',
+  }
+
+  var request = http.request(options, function(response) {
+    // cool!    
+    console.log("Got response from confhu.gs", response);
+  });
+
+  send_to_chat("Sent hug to confhu.gs! " + user + " now has " + hugs[user] + " hugs.");
 }
