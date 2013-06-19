@@ -40,6 +40,9 @@ function handle_command(cmd, args) {
     case "?summon":
       summon(args);
       break;
+    case "?mcr":
+      send_to_chat("1103. BUY MAD DRINKS.");
+      break;
     case "?hug":
       hug(args);
       break;
