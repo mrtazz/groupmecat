@@ -9,6 +9,7 @@ app.use(express.bodyParser());
 var last_posted = (new Date).getTime();
 
 app.post('/bot_callback', function(request, response) {
+  console.log("Received: " + request.body.text);
   var command = request.body.text.match(/^\?([a-z]+)/gi);
   if (command) {
    handle_command(command[0], request.body.text.split(" "));
