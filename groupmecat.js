@@ -1,6 +1,13 @@
 var express = require("express");
 var https = require("https");
 var http = require("http");
+var redis = require('redis-url').connect(process.env.REDISTOGO_URL);
+// now we can do
+// redis.set('foo', 'bar');
+//
+// redis.get('foo', function(err, value) {
+//   console.log('foo is: ' + value);
+//   });
 
 var app = express();
 app.use(express.logger());
@@ -613,7 +620,7 @@ function hug(user) {
   };
 
   var request = http.request(options, function(response) {
-    // cool!    
+    // cool!
     console.log("Got response from confhu.gs", response);
   });
 
