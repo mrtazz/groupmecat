@@ -24,6 +24,7 @@ app.listen(port, function() {
 
 function handle_command(cmd, args) {
 
+  console.log("Handling: " + cmd);
   switch (cmd) {
     case "?ping":
       send_to_chat("pong");
@@ -70,6 +71,7 @@ function send_to_chat(message) {
     // post the data
     post_req.write(post_data);
     post_req.end();
+    console.log("Message sent.");
   } else {
     console.log("Message not sent due to throttling.");
   }
@@ -84,7 +86,10 @@ function summon(text) {
     res.on("end", function(){
       var img = data.match(/imgurl=(.*?)&/gi)[0].match(/imgurl=(.*?)&/);
       if (img[1]) {
+        console.log("Sending image link: " +img[1]);
         send_to_chat(img[1]);
+      } else {
+        console.log("No image link found.");
       }
     });
   });
