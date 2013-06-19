@@ -15,8 +15,6 @@ app.use(express.bodyParser());
 
 var last_posted = (new Date).getTime();
 
-var hugs = {};
-
 app.post('/bot_callback', function(request, response) {
   console.log("Received: " + request.body.text);
   var command = request.body.text.match(/^\?([a-z]+)/gi);
@@ -605,13 +603,17 @@ function ahmed () {
 function hug(args) {
   user = args[1];
   console.log("Hugging " + user);
+  
+  hug_key = 'hugs.' + user;
+  hugs = redis.get(hug_key, function(err, value) {});
 
-  if (hugs[user] === undefined) {
-    hugs[user] = 0;
-    console.log("Creating hugspace for  " + user);
+  if (hugs) {
+    hugs++;
+  } else {
+    hugs = 1;
   }
 
-  hugs[user]++;
+  redis.set(hug_key, hugs);
 
   options = {
     hostname: 'confhu.gs',
@@ -625,5 +627,5 @@ function hug(args) {
     console.log("Got response from confhu.gs", response);
   });
 
-  send_to_chat("Sent hug to confhu.gs! " + user + " now has " + hugs[user] + " hugs.");
+  send_to_chat("Sent hug to confhu.gs! " + user + " now has " + hugs + " hugs.");
 }
