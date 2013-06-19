@@ -595,7 +595,8 @@ function ahmed () {
   send_to_chat(images[Math.floor(Math.random()*images.length)]);
 }
 
-function hug(user) {
+function hug(text) {
+  user = text.split(" ")[1];
   if (hugs[user] === undefined) {
     hugs[user] = 0;
   }
