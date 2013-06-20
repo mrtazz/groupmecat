@@ -43,6 +43,9 @@ function handle_command(cmd, args) {
     case "?mcr":
       send_to_chat("1103. BUY MAD DRINKS.");
       break;
+    case "?++":
+      plus(args);
+      break;
     case "?hug":
       hug(args);
       break;
@@ -601,6 +604,24 @@ function ahmed () {
 
 
   send_to_chat(images[Math.floor(Math.random()*images.length)]);
+}
+
+function plus(args) {
+  user = args[1];
+  console.log("Plussing" + user);
+  
+  hug_key = 'plusses.' + user;
+  hugs = redis.get(hug_key, function(err, value) {});
+
+  if (hugs) {
+    hugs++;
+  } else {
+    hugs = 1;
+  }
+
+  redis.set(hug_key, hugs);
+
+  send_to_chat("Cha-ching! " + user + " now has " + hugs + " plussii.");
 }
 
 function hug(args) {
